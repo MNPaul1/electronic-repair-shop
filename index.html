@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Local electronics repair and device shop in Surrey, BC. Phone, tablet and laptop repairs plus monitors, keyboards, chargers and accessories." />
+  <title>Surrey Tech & Repair | Phones, Laptops & Electronics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <span>Local electronics repair & sales in Surrey, BC</span>
+        <div class="topbar-links">
+          <a href="tel:+16045550184">Call (604) 555-0184</a>
+          <span>Mon–Sat 10am–7pm</span>
+        </div>
+      </div>
+    </div>
+    <nav class="container nav">
+      <a class="brand" href="#home" aria-label="Surrey Tech & Repair home">
+        <span class="brand-mark">ST</span>
+        <span><strong>Surrey Tech</strong><small>Repair & Electronics</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="#repairs">Repairs</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-small" href="#quote">Get a Quote</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Your neighbourhood tech shop</span>
+          <h1>Repair it. Replace it. Get back to your day.</h1>
+          <p>Phones, tablets, laptops and everyday electronics repaired right here in Surrey. We also stock useful accessories and pre-owned tech without the big-box-store runaround.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#quote">Request a repair quote</a>
+            <a class="btn btn-secondary" href="#shop">Browse products</a>
+          </div>
+          <div class="trust-row">
+            <span>✓ Walk-ins welcome</span>
+            <span>✓ Upfront estimates</span>
+            <span>✓ Local service</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-photo" role="img" aria-label="Electronics repair workbench"></div>
+          <div class="hero-card-content">
+            <strong>Need it fixed quickly?</strong>
+            <p>Bring in your device for a quick assessment. Many common repairs can be completed the same day, depending on parts.</p>
+            <a href="tel:+16045550184">Call the shop →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="repairs">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">Repair services</span><h2>What we can help with</h2></div>
+          <p>Simple, practical service for the devices people actually use every day.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card"><div class="icon">📱</div><h3>Phone Repair</h3><p>Cracked screens, weak batteries, charging ports, cameras, speakers and common hardware issues.</p><a href="#quote" data-service="Phone">Get a quote →</a></article>
+          <article class="service-card"><div class="icon">◫</div><h3>Tablet Repair</h3><p>Screen replacement, charging issues, battery service, buttons and general troubleshooting.</p><a href="#quote" data-service="Tablet">Get a quote →</a></article>
+          <article class="service-card"><div class="icon">💻</div><h3>Laptop & Computer</h3><p>Slow systems, SSD/RAM upgrades, screens, keyboards, power issues, overheating and cleanups.</p><a href="#quote" data-service="Laptop / Computer">Get a quote →</a></article>
+          <article class="service-card"><div class="icon">🎮</div><h3>Other Electronics</h3><p>Ask us about game consoles, smartwatches and other small electronics. We’ll tell you if it’s worth repairing.</p><a href="#quote" data-service="Other Electronics">Ask us →</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shop-section" id="shop">
+      <div class="container">
+        <div class="section-head shop-head">
+          <div><span class="eyebrow">In-store products</span><h2>Shop electronics & accessories</h2></div>
+          <p>Stock changes often. Call ahead if you want us to hold something.</p>
+        </div>
+        <div class="shop-toolbar">
+          <div class="filters" id="productFilters"></div>
+          <input id="productSearch" class="search-input" type="search" placeholder="Search products…" aria-label="Search products" />
+        </div>
+        <div id="productGrid" class="product-grid"></div>
+        <div id="emptyProducts" class="empty-state" hidden>No products match that filter.</div>
+      </div>
+    </section>
+
+    <section class="section split-section" id="about">
+      <div class="container split-grid">
+        <div class="about-panel">
+          <span class="eyebrow">Why local?</span>
+          <h2>Straight answers, without the sales pitch.</h2>
+          <p>We’re built like a neighbourhood repair counter should be: bring in the problem, get a clear explanation, and decide what makes sense for you.</p>
+          <div class="check-list">
+            <span>✓ Honest repair-or-replace advice</span>
+            <span>✓ Major phone & laptop brands</span>
+            <span>✓ Accessories you can see before buying</span>
+            <span>✓ Walk-in friendly</span>
+          </div>
+        </div>
+        <div class="info-panel">
+          <h3>Visit the shop</h3>
+          <p><strong>Surrey Tech & Repair</strong><br />128 Street, Surrey, BC<br /><em>Replace with the shop’s exact address</em></p>
+          <hr />
+          <p><strong>Hours</strong><br />Mon–Sat: 10:00 AM–7:00 PM<br />Sun: 11:00 AM–5:00 PM</p>
+          <a class="text-link" href="#contact">Contact us →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section quote-section" id="quote">
+      <div class="container quote-grid">
+        <div>
+          <span class="eyebrow">Repair request</span>
+          <h2>Tell us what happened.</h2>
+          <p>Send a few details and we can give you a better idea of the next step. This demo form opens an email so the shop can respond directly.</p>
+        </div>
+        <form id="quoteForm" class="quote-form">
+          <div class="field-row"><label>Name<input name="name" required /></label><label>Phone<input name="phone" type="tel" required /></label></div>
+          <div class="field-row"><label>Device type<select name="device" id="deviceSelect" required><option value="">Choose one</option><option>Phone</option><option>Tablet</option><option>Laptop / Computer</option><option>Other Electronics</option></select></label><label>Brand / model<input name="model" placeholder="e.g. iPhone 15, Lenovo ThinkPad" /></label></div>
+          <label>What’s wrong?<textarea name="issue" rows="4" required placeholder="Cracked screen, not charging, running slow…"></textarea></label>
+          <button class="btn" type="submit">Send repair request</button>
+          <small>No account needed. We’ll use the details only to respond to your request.</small>
+        </form>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-grid">
+        <div><span class="eyebrow">Contact</span><h2>Drop by or give us a call.</h2><p>For parts availability and repair timing, calling first is usually the fastest option.</p></div>
+        <div class="contact-cards">
+          <a href="tel:+16045550184"><span>Phone</span><strong>(604) 555-0184</strong></a>
+          <a href="mailto:hello@surreytechrepair.ca"><span>Email</span><strong>hello@surreytechrepair.ca</strong></a>
+          <div><span>Location</span><strong>Surrey, British Columbia</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><div class="brand footer-brand"><span class="brand-mark">ST</span><span><strong>Surrey Tech</strong><small>Repair & Electronics</small></span></div><p>Local device repair, electronics and accessories in Surrey, BC.</p></div>
+      <div><strong>Quick links</strong><a href="#repairs">Repairs</a><a href="#shop">Products</a><a href="#contact">Contact</a></div>
+      <div><strong>Owner</strong><button id="openAdmin" class="footer-admin">Manage product listings</button></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> Surrey Tech & Repair.</span><span>Designed for a local small business.</span></div>
+  </footer>
+
+  <dialog id="adminDialog" class="admin-dialog">
+    <div class="admin-header"><div><span class="eyebrow">Owner tools</span><h2>Manage products</h2></div><button id="closeAdmin" class="icon-btn" aria-label="Close">×</button></div>
+    <div id="adminLock" class="admin-lock">
+      <p>This demo uses a simple browser-only PIN. Production should use real authentication and a database.</p>
+      <label>Demo PIN<input id="adminPin" inputmode="numeric" placeholder="2468" /></label>
+      <button id="unlockAdmin" class="btn">Open manager</button><small>Demo PIN: <strong>2468</strong></small>
+    </div>
+    <div id="adminPanel" hidden>
+      <form id="productForm" class="product-form">
+        <input name="id" type="hidden" />
+        <input name="name" placeholder="Product name" required />
+        <input name="category" placeholder="Category (e.g. Phones, Laptops)" required />
+        <input name="price" type="number" min="0" step="0.01" placeholder="Price" required />
+        <input name="image" type="url" placeholder="Image URL (optional)" />
+        <textarea name="description" rows="2" placeholder="Short description"></textarea>
+        <label class="checkbox"><input type="checkbox" name="inStock" checked /> In stock</label>
+        <div class="product-form-actions">
+          <button id="saveProductButton" class="btn" type="submit">Add product</button>
+          <button id="cancelEdit" class="btn btn-secondary" type="button" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="admin-products-head"><h3>Current listings</h3><button id="resetProducts" class="text-button" type="button">Reset demo inventory</button></div>
+      <div id="adminProductList" class="admin-product-list"></div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
