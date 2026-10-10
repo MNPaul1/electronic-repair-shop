@@ -1,23 +1,32 @@
-# Surrey Tech & Repair — Small Business Website Demo
+# Delta Electronics — Small Business Website Demo
 
-A responsive one-page website for a Surrey, BC electronics repair + sales shop.
+A responsive one-page website for a Delta, BC electronics repair + sales shop.
 
 ## Included
+
 - Phone, tablet, laptop/computer and other electronics repair sections
 - Product storefront for monitors, keyboards, accessories and pre-owned devices
+- Sample store rating and customer reviews, clearly labeled as demo content
 - Search + category filtering
 - Owner product manager to add, edit and remove listings with custom categories
 - Product inventory saved in the browser with `localStorage`
-- Repair quote form that opens an email
 - Responsive mobile navigation
 - Local-business-oriented copy and layout
 
+## Project structure
+
+- `index.html` — page content and interactive elements
+- `styles.css` — layout, colours and responsive styles
+- `js/main.js` — starts the page and connects the features
+- `js/storefront.js` — product search, category filters and product cards
+- `js/admin.js` — owner product manager
+- `js/product-store.js` — product data and browser storage
+- `js/utils.js` — shared formatting and HTML-safety helpers
+
 ## Run locally
-No build step is required.
 
-Option 1: open `index.html` directly.
+No build step is required. Serve the folder over HTTP because the app uses native JavaScript modules.
 
-Option 2 (recommended):
 ```bash
 cd surrey-tech-shop
 python3 -m http.server 8080
