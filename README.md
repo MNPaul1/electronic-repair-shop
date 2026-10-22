@@ -1,6 +1,6 @@
 # Delta Electronics customer website
 
-The existing customer website keeps its branding, repair service content, product cards, search, filters, and responsive layout. It now runs on Cloudflare Pages. A Pages Function forwards public same-origin `/api/*` reads to the shared `delta-electronics-api` Worker, which reads products from D1. This deployment has no R2 image storage. GitHub stores only source code and deployment configuration. Product saves in the private dashboard do not rebuild this site.
+The existing customer website keeps its branding, repair service content, product cards, search, filters, and responsive layout. It now runs on Cloudflare Pages. A Pages Function forwards public same-origin `/api/*` reads to the shared `delta-electronics-api` Worker, which reads products from D1 and redirects referenced photos to Cloudinary. This deployment needs no R2 binding. GitHub stores only source code and deployment configuration. Product saves in the private dashboard do not rebuild this site.
 
 ## Run locally
 

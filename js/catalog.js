@@ -4,7 +4,7 @@ export function isValidImageReference(image) {
   if (typeof image !== 'string' || /\s|[\u0000-\u001f\u007f]/.test(image)) return false;
 
   if (image.startsWith('/') && !image.startsWith('//') && !image.includes('\\')) {
-    return /^\/api\/images\/products\/[0-9a-f-]{36}\.(?:jpg|png|webp)$/.test(image);
+    return /^\/api\/images\/products\/[0-9a-f-]{36}\.(?:jpg|png|webp|heic|heif)$/.test(image);
   }
 
   if (!/^https:\/\//i.test(image) || image.includes('\\')) return false;
