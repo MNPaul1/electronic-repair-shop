@@ -1,6 +1,6 @@
 # Delta Electronics customer website
 
-The existing customer website keeps its branding, repair service content, product cards, search, filters, and responsive layout. It now runs on Cloudflare Pages. A Pages Function forwards public same-origin `/api/*` reads to the shared `delta-electronics-api` Worker, which reads products from D1 and image bytes from R2. GitHub stores only source code and deployment configuration. Product saves in the private dashboard do not rebuild this site.
+The existing customer website keeps its branding, repair service content, product cards, search, filters, and responsive layout. It now runs on Cloudflare Pages. A Pages Function forwards public same-origin `/api/*` reads to the shared `delta-electronics-api` Worker, which reads products from D1. This deployment has no R2 image storage. GitHub stores only source code and deployment configuration. Product saves in the private dashboard do not rebuild this site.
 
 ## Run locally
 
@@ -21,4 +21,4 @@ npm test
 npm run build
 ```
 
-Create a separate Cloudflare Pages project for this site with build command `npm run build`, output directory `dist`, Node.js 22.12 or later, and a service binding named `API` targeting `delta-electronics-api`. The public Pages Function only permits GET product and image routes; owner endpoints return 404. See the [integration contract](docs/INVENTORY_INTEGRATION.md) and [workspace deployment guide](https://github.com/MNPaul1/delta-electronics-api/blob/main/DEPLOYMENT.md). No product JSON, GitHub token, R2 credential, or browser API key is deployed with the static site.
+Create a separate Cloudflare Pages project for this site with build command `npm run build`, output directory `dist`, Node.js 22.12 or later, and a service binding named `API` targeting `delta-electronics-api`. The public Pages Function only permits GET product and image routes; owner endpoints return 404. See the [integration contract](docs/INVENTORY_INTEGRATION.md) and [workspace deployment guide](https://github.com/MNPaul1/delta-electronics-api/blob/main/DEPLOYMENT.md). No product JSON, GitHub token, or browser API key is deployed with the static site.
