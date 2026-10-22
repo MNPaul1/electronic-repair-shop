@@ -22,3 +22,5 @@ npm run build
 ```
 
 Create a separate Cloudflare Pages project for this site with build command `npm run build`, output directory `dist`, Node.js 22.12 or later, and a service binding named `API` targeting `delta-electronics-api`. The public Pages Function only permits GET product and image routes; owner endpoints return 404. See the [integration contract](docs/INVENTORY_INTEGRATION.md) and [workspace deployment guide](https://github.com/MNPaul1/delta-electronics-api/blob/main/DEPLOYMENT.md). No product JSON, GitHub token, or browser API key is deployed with the static site.
+
+The Git-integrated Cloudflare Pages project is `delta-electronics-website`; pushes to `main` are configured to start production builds.
