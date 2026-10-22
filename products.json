@@ -70,5 +70,14 @@
     "description": "Standard HDMI cable for monitors, TVs and consoles.",
     "inStock": true,
     "image": ""
+  },
+  {
+    "id": "p-1682ae49-be69-4dc6-9eed-2dae665b5331",
+    "name": "Samsung 24-inch Monitor",
+    "category": "Monitors",
+    "price": 49.99,
+    "description": "",
+    "inStock": true,
+    "image": ""
   }
 ]
