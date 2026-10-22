@@ -1,0 +1,74 @@
+[
+  {
+    "id": "p1",
+    "name": "24” Full HD Monitor",
+    "category": "Monitors",
+    "price": 89.99,
+    "description": "Clean pre-owned 1080p monitor. HDMI connection.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p2",
+    "name": "Wireless Keyboard & Mouse",
+    "category": "Keyboards",
+    "price": 34.99,
+    "description": "Simple wireless combo for home or office.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p3",
+    "name": "USB-C Fast Charger 20W",
+    "category": "Accessories",
+    "price": 19.99,
+    "description": "Compact wall charger for compatible phones and tablets.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p4",
+    "name": "USB-C to USB-C Cable",
+    "category": "Accessories",
+    "price": 12.99,
+    "description": "1 metre everyday charging and data cable.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p5",
+    "name": "Refurbished Android Phone",
+    "category": "Devices",
+    "price": 179.99,
+    "description": "Unlocked pre-owned phone. Model availability changes often.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p6",
+    "name": "Laptop Cooling Pad",
+    "category": "Accessories",
+    "price": 24.99,
+    "description": "USB-powered cooling stand for laptops.",
+    "inStock": false,
+    "image": ""
+  },
+  {
+    "id": "p7",
+    "name": "Compact Bluetooth Keyboard",
+    "category": "Keyboards",
+    "price": 29.99,
+    "description": "Portable keyboard for tablets, phones and computers.",
+    "inStock": true,
+    "image": ""
+  },
+  {
+    "id": "p8",
+    "name": "HDMI Cable 6 ft",
+    "category": "Accessories",
+    "price": 9.99,
+    "description": "Standard HDMI cable for monitors, TVs and consoles.",
+    "inStock": true,
+    "image": ""
+  }
+]

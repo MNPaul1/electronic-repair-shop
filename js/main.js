@@ -1,4 +1,3 @@
-import { initializeAdmin } from './admin.js';
 import { initializeStorefront } from './storefront.js';
 
 function initializeNavigation() {
@@ -22,7 +21,6 @@ function initializePage() {
   document.querySelector('#year').textContent = new Date().getFullYear();
   initializeNavigation();
   initializeStorefront();
-  initializeAdmin();
 }
 
 initializePage();

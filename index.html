@@ -169,7 +169,7 @@
           </div>
 
           <div id="productGrid" class="product-grid"></div>
-          <div id="emptyProducts" class="empty-state" hidden>
+          <div id="emptyProducts" class="empty-state" role="status" hidden>
             No products match that filter.
           </div>
         </div>
@@ -303,78 +303,12 @@
           <a href="#shop">Products</a>
           <a href="#contact">Contact</a>
         </div>
-
-        <div>
-          <strong>Owner</strong>
-          <button id="openAdmin" class="footer-admin" type="button">
-            Manage product listings
-          </button>
-        </div>
       </div>
 
       <div class="container footer-bottom">
         <span>© <span id="year"></span> Delta Electronics.</span>
       </div>
     </footer>
-
-    <dialog id="adminDialog" class="admin-dialog" aria-labelledby="adminTitle">
-      <div class="admin-header">
-        <div>
-          <span class="eyebrow">Owner tools</span>
-          <h2 id="adminTitle">Manage products</h2>
-        </div>
-        <button id="closeAdmin" class="icon-btn" type="button" aria-label="Close">×</button>
-      </div>
-
-      <div id="adminLock" class="admin-lock">
-        <p>
-          This demo uses a simple browser-only PIN. Production should use real authentication
-          and a database.
-        </p>
-        <label>
-          Demo PIN
-          <input id="adminPin" inputmode="numeric" autocomplete="one-time-code" placeholder="2468" />
-        </label>
-        <button id="unlockAdmin" class="btn" type="button">Open manager</button>
-        <small>Demo PIN: <strong>2468</strong></small>
-      </div>
-
-      <div id="adminPanel" hidden>
-        <form id="productForm" class="product-form">
-          <input name="id" type="hidden" />
-          <input name="name" placeholder="Product name" required />
-          <input name="category" placeholder="Category (e.g. Phones, Laptops)" required />
-          <input
-            name="price"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Price"
-            required
-          />
-          <input name="image" type="url" placeholder="Image URL (optional)" />
-          <textarea name="description" rows="2" placeholder="Short description"></textarea>
-          <label class="checkbox">
-            <input type="checkbox" name="inStock" checked />
-            In stock
-          </label>
-          <div class="product-form-actions">
-            <button id="saveProductButton" class="btn" type="submit">Add product</button>
-            <button id="cancelEdit" class="btn btn-secondary" type="button" hidden>
-              Cancel edit
-            </button>
-          </div>
-        </form>
-
-        <div class="admin-products-head">
-          <h3>Current listings</h3>
-          <button id="resetProducts" class="text-button" type="button">
-            Reset demo inventory
-          </button>
-        </div>
-        <div id="adminProductList" class="admin-product-list"></div>
-      </div>
-    </dialog>
 
     <script type="module" src="./js/main.js"></script>
   </body>
