@@ -108,16 +108,19 @@ export async function initializeStorefront() {
   products = [];
   catalogStatus = 'loading';
   document.querySelector('#productSearch').addEventListener('input', refreshProductCatalog);
+  const loading = document.querySelector('#emptyProducts');
+  loading.textContent = 'Loading products…';
+  loading.hidden = false;
 
   try {
-    const response = await fetch('/products.json', { cache: 'no-store' });
+    const response = await fetch('/api/products');
     if (!response.ok) throw new Error(`Catalogue request failed (${response.status}).`);
-
-    products = validateCatalog(await response.json());
+    const body = await response.json();
+    products = validateCatalog(body.products);
     catalogStatus = 'ready';
     refreshProductCatalog();
   } catch (error) {
-    console.error('Could not load products.json:', error);
+    console.error('Could not load product API:', error);
     showCatalogError();
   }
 }

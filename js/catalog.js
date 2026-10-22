@@ -4,13 +4,7 @@ export function isValidImageReference(image) {
   if (typeof image !== 'string' || /\s|[\u0000-\u001f\u007f]/.test(image)) return false;
 
   if (image.startsWith('/') && !image.startsWith('//') && !image.includes('\\')) {
-    // Reject encoded paths and traversal instead of letting the URL parser normalize them.
-    return image.startsWith('/assets/products/') &&
-      !image.includes('%') &&
-      !image.includes('?') &&
-      !image.includes('#') &&
-      !image.split('/').includes('..') &&
-      image.length > '/assets/products/'.length;
+    return /^\/api\/images\/products\/[0-9a-f-]{36}\.(?:jpg|png|webp)$/.test(image);
   }
 
   if (!/^https:\/\//i.test(image) || image.includes('\\')) return false;

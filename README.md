@@ -1,56 +1,24 @@
-# Delta Electronics — Small Business Website Demo
+# Delta Electronics customer website
 
-A responsive one-page website for a Delta, BC electronics repair and sales shop.
-
-## Included
-
-- Phone, tablet, laptop/computer and other electronics repair sections
-- Product storefront loaded from a separate JSON catalog
-- Search and category filtering
-- Sample store rating and customer reviews, clearly labeled as demo content
-- Responsive mobile navigation
-
-## Product catalog
-
-Product listings are stored in `products.json` at the site root. It is the only inventory source for this website. Commit catalogue changes to the branch used for Vercel production deployments; the site fetches the deployed `/products.json` on each page load. Each product uses these fields:
-
-- `id` — unique product identifier
-- `name` — product name
-- `category` — category used by the storefront filters
-- `price` — price in Canadian dollars
-- `description` — short product description
-- `inStock` — `true` or `false`
-- `image` — HTTPS image URL, `/assets/products/...` path, or an empty string for the placeholder
-
-See [the inventory integration contract](docs/INVENTORY_INTEGRATION.md) for validation rules and the future private dashboard workflow. Product images kept in GitHub are suitable for a small catalogue. Use object storage if uploads become large or frequent.
-
-## Project structure
-
-- `index.html` — page content
-- `products.json` — product catalog
-- `styles.css` — layout, colours and responsive styles
-- `js/main.js` — starts the page and connects the features
-- `js/storefront.js` — loads the catalog, filters and renders products
-- `js/catalog.js` — validates the catalogue before display
-- `js/utils.js` — shared formatting and HTML-safety helpers
-- `vercel.json` — browser cache policy for the catalogue
-- `tests/catalog.test.mjs` — dependency-free catalogue and storefront checks
+The existing customer website keeps its branding, repair service content, product cards, search, filters, and responsive layout. It now runs on Cloudflare Pages. A Pages Function forwards public same-origin `/api/*` reads to the shared `delta-electronics-api` Worker, which reads products from D1 and image bytes from R2. GitHub stores only source code and deployment configuration. Product saves in the private dashboard do not rebuild this site.
 
 ## Run locally
 
-No build step is required. Serve the folder over HTTP because the app uses native JavaScript modules and fetches `products.json`.
+Use Node.js 22.12 or later. Start the sibling API Worker first with local D1 migration and sample import; see [the API README](../delta-electronics-api/README.md). Then:
 
-```bash
-cd surrey-tech-shop
-python3 -m http.server 8080
+```sh
+npm ci
+npm run dev
+# http://localhost:8788
 ```
 
-Then open `http://localhost:8080`.
+`npm run dev` builds the static assets into `dist` and starts Wrangler Pages with the local `API` service binding. The build excludes the historical `fixtures/products.json`. To test a fresh product edit, change a product in the local owner dashboard and refresh this website; the API advertises a 20-second product cache. No frontend rebuild is needed for inventory changes.
 
-Run the checks with `node --test tests/catalog.test.mjs` (Node.js 22 or newer).
+## Checks and deployment
 
-For Vercel, import this repository as a static project with this folder as the project root, leave the build command empty, and connect the intended production branch. No runtime database or public GitHub token is needed.
+```sh
+npm test
+npm run build
+```
 
-## Before going live
-
-Replace the sample address, business hours, product details, images, demo review content, repair promises and warranty wording with accurate business information.
+Create a separate Cloudflare Pages project for this site with build command `npm run build`, output directory `dist`, Node.js 22.12 or later, and a service binding named `API` targeting `delta-electronics-api`. The public Pages Function only permits GET product and image routes; owner endpoints return 404. See the [integration contract](docs/INVENTORY_INTEGRATION.md) and [workspace deployment guide](https://github.com/MNPaul1/delta-electronics-api/blob/main/DEPLOYMENT.md). No product JSON, GitHub token, R2 credential, or browser API key is deployed with the static site.

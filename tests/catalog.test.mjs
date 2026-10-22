@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { isValidImageReference, validateCatalog } from '../js/catalog.js';
 import { initializeStorefront } from '../js/storefront.js';
 
-const samples = JSON.parse(readFileSync(new URL('../products.json', import.meta.url), 'utf8'));
+const samples = JSON.parse(readFileSync(new URL('../fixtures/products.json', import.meta.url), 'utf8'));
 
 function mockPage(catalog, { badJson = false } = {}) {
   const search = {
@@ -48,13 +48,12 @@ function mockPage(catalog, { badJson = false } = {}) {
     }
   };
   globalThis.fetch = async (url, options) => {
-    assert.equal(url, '/products.json');
-    assert.equal(options.cache, 'no-store');
+    assert.equal(url, '/api/products');
     return {
       ok: true,
       json: async () => {
         if (badJson) throw new SyntaxError('Invalid JSON');
-        return catalog;
+        return { products: catalog };
       }
     };
   };
@@ -65,9 +64,9 @@ function cardCount(grid) {
   return [...grid.innerHTML.matchAll(/class="product-card"/g)].length;
 }
 
-test('existing eight products satisfy the contract', () => {
-  assert.equal(validateCatalog(samples).length, 8);
-  assert.equal(new Set(samples.map(product => product.id)).size, 8);
+test('existing nine products satisfy the contract', () => {
+  assert.equal(validateCatalog(samples).length, 9);
+  assert.equal(new Set(samples.map(product => product.id)).size, 9);
 });
 
 test('validation enforces required types, unique IDs, and safe image references', () => {
@@ -83,7 +82,7 @@ test('validation enforces required types, unique IDs, and safe image references'
   assert.throws(() => validateCatalog([product, { ...product }]));
   assert.throws(() => validateCatalog({ products: samples }));
   assert.deepEqual(validateCatalog([]), []);
-  assert.equal(isValidImageReference('/assets/products/monitor.jpg'), true);
+  assert.equal(isValidImageReference('/api/images/products/00000000-0000-0000-0000-000000000001.jpg'), true);
   assert.equal(isValidImageReference('https://example.com/monitor.jpg'), true);
   assert.equal(isValidImageReference('http://example.com/monitor.jpg'), false);
   assert.equal(isValidImageReference('https:example.com/monitor.jpg'), false);
@@ -94,7 +93,7 @@ test('validation enforces required types, unique IDs, and safe image references'
 test('storefront reflects additions, removals, prices, stock, categories, search, and empty catalogues', async () => {
   let page = mockPage(samples);
   await initializeStorefront();
-  assert.equal(cardCount(page.grid), 8);
+  assert.equal(cardCount(page.grid), samples.length);
   assert.match(page.grid.innerHTML, /\$89\.99/);
   assert.match(page.grid.innerHTML, /Ask for stock/);
   assert.match(page.filters.innerHTML, /Monitors/);
@@ -102,7 +101,7 @@ test('storefront reflects additions, removals, prices, stock, categories, search
   const added = { ...samples[0], id: 'p9', name: '<Special Camera>', category: 'Cameras', price: 129.5, inStock: false };
   page = mockPage([...samples.slice(1), { ...samples[0], price: 99.99, inStock: false }, added]);
   await initializeStorefront();
-  assert.equal(cardCount(page.grid), 9);
+  assert.equal(cardCount(page.grid), samples.length + 1);
   assert.match(page.grid.innerHTML, /\$99\.99/);
   assert.match(page.grid.innerHTML, /\$129\.50/);
   assert.match(page.filters.innerHTML, /Cameras/);
@@ -123,7 +122,7 @@ test('storefront reflects additions, removals, prices, stock, categories, search
 
   page = mockPage(samples.slice(1));
   await initializeStorefront();
-  assert.equal(cardCount(page.grid), 7);
+  assert.equal(cardCount(page.grid), samples.length - 1);
   assert.doesNotMatch(page.grid.innerHTML, /24” Full HD Monitor/);
 
   page = mockPage([]);
@@ -134,7 +133,7 @@ test('storefront reflects additions, removals, prices, stock, categories, search
 });
 
 test('images are lazy loaded and broken images fall back to the placeholder', async () => {
-  const page = mockPage([{ ...samples[0], image: '/assets/products/monitor.jpg' }]);
+  const page = mockPage([{ ...samples[0], image: '/api/images/products/00000000-0000-0000-0000-000000000001.jpg' }]);
   await initializeStorefront();
   assert.match(page.grid.innerHTML, /loading="lazy"/);
   assert.match(page.grid.innerHTML, /alt="24” Full HD Monitor"/);

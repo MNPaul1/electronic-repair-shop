@@ -1,0 +1,16 @@
+{
+  "name": "delta-electronics-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && wrangler pages dev dist --port 8788 --service API=delta-electronics-api",
+    "test": "node --test tests/catalog.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
