@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" fill="none">
+  <defs>
+    <linearGradient id="monitor-screen" x1="105" x2="357" y1="47" y2="212" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#163321"/>
+      <stop offset=".55" stop-color="#4F9661"/>
+      <stop offset="1" stop-color="#B9E6B7"/>
+    </linearGradient>
+    <linearGradient id="monitor-case" x1="76" x2="393" y1="34" y2="233" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0E9E0"/>
+      <stop offset=".6" stop-color="#B2C4B4"/>
+      <stop offset="1" stop-color="#778C7B"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="249" cy="263" rx="177" ry="14" fill="#06140B" fill-opacity=".34"/>
+  <g transform="rotate(2 250 148)">
+    <rect x="82" y="30" width="292" height="188" rx="17" fill="url(#monitor-case)"/>
+    <rect x="94" y="42" width="268" height="163" rx="9" fill="#101A14"/>
+    <rect x="101" y="49" width="254" height="149" rx="5" fill="url(#monitor-screen)"/>
+    <path d="M125 176c30-57 81-85 129-69 40 14 61 28 90 15" stroke="#E6FFE9" stroke-opacity=".68" stroke-width="2"/>
+    <ellipse cx="232" cy="123" rx="112" ry="52" transform="rotate(-20 232 123)" stroke="#E5FFE9" stroke-opacity=".34" stroke-width="2"/>
+    <rect x="121" y="75" width="83" height="80" rx="7" fill="#143421" fill-opacity=".74" stroke="#DFFFE5" stroke-opacity=".45"/>
+    <path d="M135 91h26m-26 12h53m-53 12h45m-45 12h34" stroke="#DBF9DF" stroke-opacity=".78" stroke-width="3" stroke-linecap="round"/>
+    <path d="M210 218h36l14 31h-64l14-31Z" fill="#9EB29F"/>
+    <path d="M174 246h109c8 0 13 3 16 8H158c3-5 8-8 16-8Z" fill="url(#monitor-case)"/>
+    <circle cx="228" cy="210" r="2.5" fill="#5B705E"/>
+  </g>
+  <path d="m400 88 4 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1 2-7Z" fill="#E4FFE9" fill-opacity=".85"/>
+  <circle cx="99" cy="74" r="4" fill="#B5F2C2"/>
+</svg>

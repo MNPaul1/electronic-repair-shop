@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" fill="none">
+  <defs>
+    <linearGradient id="printer-shell" x1="121" x2="378" y1="126" y2="251" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5FAF4"/>
+      <stop offset=".55" stop-color="#C5D6C7"/>
+      <stop offset="1" stop-color="#91A797"/>
+    </linearGradient>
+    <linearGradient id="printer-paper" x1="221" x2="291" y1="45" y2="175" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D8E8D9"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="254" cy="257" rx="137" ry="13" fill="#06140B" fill-opacity=".34"/>
+  <g transform="rotate(-3 251 148)">
+    <rect x="221" y="35" width="72" height="145" rx="4" fill="url(#printer-paper)"/>
+    <path d="M235 67h44m-44 12h44m-44 12h31" stroke="#91A998" stroke-width="3" stroke-linecap="round"/>
+    <path d="M144 99V74c0-7 6-13 13-13h185c7 0 13 6 13 13v25" fill="#D9E7DA"/>
+    <rect x="111" y="103" width="278" height="132" rx="22" fill="url(#printer-shell)" stroke="#E9F5E9" stroke-width="2"/>
+    <path d="M131 113c0-13 10-23 23-23h192c13 0 23 10 23 23v16H131v-16Z" fill="#AFC4B2"/>
+    <rect x="151" y="153" width="184" height="10" rx="5" fill="#637C68"/>
+    <path d="M153 173h159v51H153v-51Z" fill="#F9FCF8"/>
+    <path d="M169 188h126m-126 10h102m-102 10h72" stroke="#8DA894" stroke-width="3" stroke-linecap="round"/>
+    <rect x="345" y="143" width="24" height="16" rx="5" fill="#344E3A"/>
+    <circle cx="357" cy="151" r="3" fill="#9EF0AE"/>
+    <circle cx="356" cy="204" r="6" fill="#448D5D"/>
+    <circle cx="356" cy="204" r="10" stroke="#4A925F" stroke-opacity=".22" stroke-width="3"/>
+    <path d="M130 231c0 11 9 20 20 20h201c11 0 20-9 20-20" fill="#748A78"/>
+  </g>
+  <circle cx="113" cy="92" r="4" fill="#B5F2C2"/>
+  <path d="m398 95 4 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1 2-7Z" fill="#E4FFE9" fill-opacity=".85"/>
+</svg>

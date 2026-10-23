@@ -79,16 +79,150 @@
             </div>
           </div>
 
-          <div class="hero-card">
-            <div class="hero-photo" role="img" aria-label="Electronics repair workbench"></div>
-            <div class="hero-card-content">
-              <strong>Need it fixed quickly?</strong>
-              <p>
-                Bring in your device for a quick assessment. Many common repairs can be
-                completed the same day, depending on parts.
-              </p>
-              <a href="tel:+16048080496">Call the shop →</a>
+          <div
+            class="hero-card repair-carousel"
+            data-repair-carousel
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Repair service slideshow"
+          >
+            <div class="repair-carousel-head">
+              <span class="repair-carousel-label"><i aria-hidden="true"></i> On the repair bench</span>
+              <span class="repair-carousel-location">DELTA, BC</span>
             </div>
+
+            <div class="repair-slide-stage">
+              <article
+                class="repair-slide is-active"
+                data-repair-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label="1 of 4: Cell phones and tablets"
+                aria-hidden="false"
+              >
+                <div class="repair-art repair-art--phone" aria-hidden="true">
+                  <span class="repair-art-tag">01 / SCREEN CARE</span>
+                  <span class="repair-orbit repair-orbit--one"></span>
+                  <span class="repair-orbit repair-orbit--two"></span>
+                  <img class="repair-art-device" src="assets/repair-phone-tablet.svg" alt="" />
+                  <span class="repair-float-tag repair-float-tag--phone"><b>✓</b> Carefully checked</span>
+                  <span class="repair-art-spark repair-art-spark--one">✳</span>
+                  <span class="repair-art-spark repair-art-spark--two">✦</span>
+                </div>
+                <div class="repair-slide-copy">
+                  <div>
+                    <span class="repair-slide-category">CELL PHONES + TABLETS</span>
+                    <h2>Phone or tablet giving you trouble?</h2>
+                    <p>Sales, troubleshooting and repair for phones and tablets.</p>
+                  </div>
+                  <span class="repair-slide-number" aria-hidden="true">01</span>
+                </div>
+              </article>
+
+              <article
+                class="repair-slide"
+                data-repair-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label="2 of 4: Laptops and computers"
+                aria-hidden="true"
+              >
+                <div class="repair-art repair-art--laptop" aria-hidden="true">
+                  <span class="repair-art-tag">02 / COMPUTER CARE</span>
+                  <span class="repair-orbit repair-orbit--one"></span>
+                  <span class="repair-orbit repair-orbit--two"></span>
+                  <img class="repair-art-device" src="assets/repair-laptop.svg" alt="" />
+                  <span class="repair-float-tag repair-float-tag--laptop"><b>✓</b> Let's take a look</span>
+                  <span class="repair-art-spark repair-art-spark--one">✳</span>
+                  <span class="repair-art-spark repair-art-spark--two">✦</span>
+                </div>
+                <div class="repair-slide-copy">
+                  <div>
+                    <span class="repair-slide-category">LAPTOPS + COMPUTERS</span>
+                    <h2>Laptop or computer giving you trouble?</h2>
+                    <p>Sales, troubleshooting and repair for laptops and computers.</p>
+                  </div>
+                  <span class="repair-slide-number" aria-hidden="true">02</span>
+                </div>
+              </article>
+
+              <article
+                class="repair-slide"
+                data-repair-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label="3 of 4: Printer sales and repair"
+                aria-hidden="true"
+              >
+                <div class="repair-art repair-art--printer" aria-hidden="true">
+                  <span class="repair-art-tag">03 / PRINTER SUPPORT</span>
+                  <span class="repair-orbit repair-orbit--one"></span>
+                  <span class="repair-orbit repair-orbit--two"></span>
+                  <img class="repair-art-device" src="assets/repair-printer.svg" alt="" />
+                  <span class="repair-float-tag repair-float-tag--printer"><b>✓</b> Printer support</span>
+                  <span class="repair-art-spark repair-art-spark--one">✳</span>
+                  <span class="repair-art-spark repair-art-spark--two">✦</span>
+                </div>
+                <div class="repair-slide-copy">
+                  <div>
+                    <span class="repair-slide-category">PRINTERS</span>
+                    <h2>Printer trouble slowing you down?</h2>
+                    <p>Printer sales, troubleshooting and repair, right here in Delta.</p>
+                  </div>
+                  <span class="repair-slide-number" aria-hidden="true">03</span>
+                </div>
+              </article>
+
+              <article
+                class="repair-slide"
+                data-repair-slide
+                role="group"
+                aria-roledescription="slide"
+                aria-label="4 of 4: Everyday electronics and technical support"
+                aria-hidden="true"
+              >
+                <div class="repair-art repair-art--desktop" aria-hidden="true">
+                  <span class="repair-art-tag">04 / EVERYDAY TECH</span>
+                  <span class="repair-orbit repair-orbit--one"></span>
+                  <span class="repair-orbit repair-orbit--two"></span>
+                  <img class="repair-art-device" src="assets/repair-desktop.svg" alt="" />
+                  <span class="repair-float-tag repair-float-tag--desktop"><b>✓</b> Support that fits</span>
+                  <span class="repair-art-spark repair-art-spark--one">✳</span>
+                  <span class="repair-art-spark repair-art-spark--two">✦</span>
+                </div>
+                <div class="repair-slide-copy">
+                  <div>
+                    <span class="repair-slide-category">ELECTRONICS + SUPPORT</span>
+                    <h2>Everyday tech, looked after.</h2>
+                    <p>Ask us about technical support, IP TV services and other electronics.</p>
+                  </div>
+                  <span class="repair-slide-number" aria-hidden="true">04</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="repair-carousel-footer">
+              <a class="repair-services-link" href="#repairs">Explore repairs <span aria-hidden="true">↗</span></a>
+              <div class="repair-carousel-controls" role="group" aria-label="Slideshow controls">
+                <div class="repair-carousel-dots" role="group" aria-label="Choose a repair service">
+                  <button class="repair-carousel-dot is-active" type="button" data-repair-go-to="0" aria-label="Show slide 1: Cell phones and tablets" aria-current="true"></button>
+                  <button class="repair-carousel-dot" type="button" data-repair-go-to="1" aria-label="Show slide 2: Laptops and computers" aria-current="false"></button>
+                  <button class="repair-carousel-dot" type="button" data-repair-go-to="2" aria-label="Show slide 3: Printers" aria-current="false"></button>
+                  <button class="repair-carousel-dot" type="button" data-repair-go-to="3" aria-label="Show slide 4: Everyday electronics and support" aria-current="false"></button>
+                </div>
+                <span class="repair-carousel-count" data-repair-count aria-hidden="true">01 / 04</span>
+                <button class="repair-carousel-button" type="button" data-repair-previous aria-label="Previous repair service">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" /></svg>
+                </button>
+                <button class="repair-carousel-button" type="button" data-repair-toggle aria-label="Pause slideshow">
+                  <svg viewBox="0 0 24 24" data-repair-toggle-icon aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>
+                </button>
+                <button class="repair-carousel-button" type="button" data-repair-next aria-label="Next repair service">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" /></svg>
+                </button>
+              </div>
+            </div>
+            <p class="visually-hidden" data-repair-announcement aria-live="polite"></p>
           </div>
         </div>
       </section>

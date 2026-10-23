@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" fill="none">
+  <defs>
+    <linearGradient id="laptop-screen" x1="157" x2="355" y1="54" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#192E20"/>
+      <stop offset=".55" stop-color="#4F9A63"/>
+      <stop offset="1" stop-color="#B8E5B7"/>
+    </linearGradient>
+    <linearGradient id="laptop-case" x1="83" x2="414" y1="217" y2="258" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DFE9DE"/>
+      <stop offset=".5" stop-color="#9FB3A1"/>
+      <stop offset="1" stop-color="#647A68"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="249" cy="264" rx="174" ry="14" fill="#06140B" fill-opacity=".34"/>
+  <g transform="rotate(-5 251 153)">
+    <rect x="123" y="35" width="258" height="184" rx="16" fill="#101A14"/>
+    <rect x="133" y="45" width="238" height="161" rx="8" fill="url(#laptop-screen)"/>
+    <path d="M177 175c23-59 62-86 102-73 30 10 52 30 79 18" stroke="#E7FFE9" stroke-opacity=".74" stroke-width="2"/>
+    <ellipse cx="260" cy="121" rx="95" ry="43" transform="rotate(-22 260 121)" stroke="#E3FFE8" stroke-opacity=".38" stroke-width="2"/>
+    <ellipse cx="260" cy="121" rx="61" ry="27" transform="rotate(-22 260 121)" stroke="#E3FFE8" stroke-opacity=".42" stroke-width="2"/>
+    <circle cx="253" cy="42" r="2.5" fill="#5B705E"/>
+    <path d="m96 217 312 0 38 32c3 3 0 8-5 8H58c-5 0-8-5-4-8l42-32Z" fill="url(#laptop-case)"/>
+    <path d="m131 225-20 19m38-19-17 19m36-19-14 19m33-19-10 19m29-19-7 19m26-19-2 19m27-19 3 19m21-19 7 19m14-19 11 19m6-19 16 19m-126-1h29" stroke="#738A77" stroke-opacity=".72" stroke-width="2" stroke-linecap="round"/>
+    <path d="m227 218 38 0 8 5-54 0 8-5Z" fill="#829685"/>
+  </g>
+  <circle cx="400" cy="77" r="4" fill="#B5F2C2"/>
+  <path d="m111 80 4 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1 2-7Z" fill="#E4FFE9" fill-opacity=".85"/>
+</svg>
