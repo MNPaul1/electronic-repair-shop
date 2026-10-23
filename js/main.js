@@ -3,6 +3,7 @@ import { initializeStorefront } from './storefront.js';
 function initializeNavigation() {
   const menuButton = document.querySelector('.menu-toggle');
   const navigation = document.querySelector('.nav-links');
+  if (!menuButton || !navigation) return;
 
   menuButton.addEventListener('click', () => {
     const isOpen = navigation.classList.toggle('open');
@@ -18,7 +19,8 @@ function initializeNavigation() {
 }
 
 function initializePage() {
-  document.querySelector('#year').textContent = new Date().getFullYear();
+  const year = document.querySelector('#year');
+  if (year) year.textContent = new Date().getFullYear();
   initializeNavigation();
   initializeStorefront();
 }

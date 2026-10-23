@@ -140,6 +140,17 @@ test('storefront reflects additions, removals, prices, stock, categories, search
   assert.match(page.empty.textContent, /No products are listed/);
 });
 
+test('home product grid respects its limit while the listings page can show every product', async () => {
+  const home = mockPage(samples);
+  home.grid.dataset = { productLimit: '6' };
+  await initializeStorefront();
+  assert.equal(cardCount(home.grid), 6);
+
+  const listings = mockPage(samples);
+  await initializeStorefront();
+  assert.equal(cardCount(listings.grid), samples.length);
+});
+
 test('images are lazy loaded and broken images fall back to the placeholder', async () => {
   const page = mockPage([{ ...samples[0], image: '/api/images/products/00000000-0000-0000-0000-000000000001.jpg' }]);
   await initializeStorefront();
@@ -153,21 +164,47 @@ test('images are lazy loaded and broken images fall back to the placeholder', as
   assert.match(placeholderPage.grid.innerHTML, /product-placeholder/);
 });
 
+test('products with one or no photo do not show gallery controls', async () => {
+  const first = '/api/images/products/00000000-0000-0000-0000-000000000001.jpg';
+  const page = mockPage([
+    { ...samples[0], images: undefined, image: first },
+    { ...samples[1], images: undefined, image: '' }
+  ]);
+  await initializeStorefront();
+
+  const cards = page.grid.innerHTML.split('</article>');
+  assert.match(cards[0], /product-image-media[\s\S]*<img/);
+  assert.doesNotMatch(cards[0], /product-gallery-controls|photo-count/);
+  assert.match(cards[1], /product-placeholder/);
+  assert.doesNotMatch(cards[1], /product-gallery-controls|photo-count/);
+});
+
 test('multiple photos show customer gallery controls', async () => {
   const first = '/api/images/products/00000000-0000-0000-0000-000000000001.jpg';
   const second = '/api/images/products/00000000-0000-0000-0000-000000000002.jpg';
   const page = mockPage([{ ...samples[0], image: first, images: [first, second] }]);
   await initializeStorefront();
-  assert.match(page.grid.innerHTML, /photo-count">1 \/ 2/);
-  assert.match(page.grid.innerHTML, /Previous photo/);
-  assert.match(page.grid.innerHTML, /Next photo/);
-  const frame = { innerHTML: '', querySelectorAll: () => [] };
+  assert.match(page.grid.innerHTML, /photo-count"[^>]*>1 \/ 2/);
+  assert.match(page.grid.innerHTML, /type="button" data-photo-step="-1" aria-label="Previous photo/);
+  assert.match(page.grid.innerHTML, /type="button" data-photo-step="1" aria-label="Next photo/);
+  assert.match(page.grid.innerHTML, /<div class="product-image">\s*<div class="product-image-media">[\s\S]*?<\/div>\s*<div class="product-gallery-controls"/);
+  const media = { innerHTML: `<img src="${first}">`, querySelectorAll: () => [] };
+  const frame = {
+    innerHTML: '<div class="product-image-media"><img></div><div class="product-gallery-controls">buttons and counter</div>',
+    querySelector(selector) { return selector === '.product-image-media' ? media : null; },
+    querySelectorAll: () => []
+  };
   const count = { textContent: '' };
   const card = { dataset: { productId: samples[0].id, photoIndex: '0' },
-    querySelector(selector) { return selector === '.product-image' ? frame : count; } };
+    querySelector(selector) {
+      if (selector === '.product-image') return frame;
+      if (selector === '.photo-count') return count;
+      return frame.querySelector(selector);
+    } };
   const button = { dataset: { photoStep: '1' }, closest: () => card };
   page.grid.onClick({ target: { closest: () => button } });
-  assert.match(frame.innerHTML, /00000000-0000-0000-0000-000000000002\.jpg/);
+  assert.match(media.innerHTML, /00000000-0000-0000-0000-000000000002\.jpg/);
+  assert.match(frame.innerHTML, /product-gallery-controls/);
   assert.equal(count.textContent, '2 / 2');
 });
 

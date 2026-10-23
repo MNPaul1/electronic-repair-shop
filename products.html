@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Browse all current electronics, accessories and pre-owned tech listings at Delta Electronics in Delta, BC."
+    />
+    <title>All Product Listings | Delta Electronics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="container nav" aria-label="Main navigation">
+        <a class="brand" href="index.html#home" aria-label="Delta Electronics home">
+          <span class="brand-mark">DE</span>
+          <span>
+            <strong>Delta Electronics</strong>
+            <small>Tech for everyday life</small>
+          </span>
+        </a>
+        <a class="btn btn-small btn-secondary" href="index.html#shop">← Home</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section shop-section" id="shop">
+        <div class="container">
+          <div class="section-head shop-head">
+            <div>
+              <span class="eyebrow">In-store products</span>
+              <h1>All product listings</h1>
+            </div>
+            <p>Search the full catalog or filter by category. Call to check current stock.</p>
+          </div>
+
+          <div class="shop-toolbar">
+            <div class="filters" id="productFilters" aria-label="Filter products"></div>
+            <input
+              id="productSearch"
+              class="search-input"
+              type="search"
+              placeholder="Search products…"
+              aria-label="Search products"
+            />
+          </div>
+
+          <div id="productGrid" class="product-grid"></div>
+          <div id="emptyProducts" class="empty-state" role="status" hidden>
+            No products match that filter.
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

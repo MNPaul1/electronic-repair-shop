@@ -43,40 +43,49 @@ function renderProductCards() {
   });
 
   const grid = document.querySelector('#productGrid');
+  const productLimit = Number(grid.dataset?.productLimit);
+  const displayedProducts = productLimit > 0
+    ? visibleProducts.slice(0, productLimit)
+    : visibleProducts;
   const emptyState = document.querySelector('#emptyProducts');
   emptyState.hidden = visibleProducts.length > 0;
   emptyState.textContent = products.length === 0
     ? 'No products are listed right now. Call the shop for current stock.'
     : 'No products match that filter.';
 
-  grid.innerHTML = visibleProducts.map(product => `
-    <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-photo-index="0">
-      <div class="product-image">
-        ${product.image
-          ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async">`
-          : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
-      </div>
-      ${productImages(product).length > 1 ? `<div class="product-gallery-controls">
-        <button type="button" data-photo-step="-1" aria-label="Previous photo of ${escapeHtml(product.name)}">‹</button>
-        <span class="photo-count">1 / ${productImages(product).length}</span>
-        <button type="button" data-photo-step="1" aria-label="Next photo of ${escapeHtml(product.name)}">›</button>
-      </div>` : ''}
-      <div class="product-body">
-        <div class="product-meta">
-          <span>${escapeHtml(product.category)}</span>
-          <span class="${product.inStock ? 'stock' : 'out'}">
-            ${product.inStock ? 'In stock' : 'Ask for stock'}
-          </span>
+  grid.innerHTML = displayedProducts.map(product => {
+    const images = productImages(product);
+    return `
+      <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-photo-index="0">
+        <div class="product-image">
+          <div class="product-image-media">
+            ${product.image
+              ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async">`
+              : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
+          </div>
+          ${images.length > 1 ? `<div class="product-gallery-controls" role="group" aria-label="Photo gallery for ${escapeHtml(product.name)}">
+            <button type="button" data-photo-step="-1" aria-label="Previous photo of ${escapeHtml(product.name)}">‹</button>
+            <span class="photo-count" aria-live="polite" aria-atomic="true">1 / ${images.length}</span>
+            <button type="button" data-photo-step="1" aria-label="Next photo of ${escapeHtml(product.name)}">›</button>
+          </div>` : ''}
         </div>
-        <h3>${escapeHtml(product.name)}</h3>
-        <p>${escapeHtml(product.description)}</p>
-        <div class="price-row">
-          <span class="price">${formatPrice(product.price)}</span>
-          <a href="tel:+16048080496">Call to hold →</a>
+        <div class="product-body">
+          <div class="product-meta">
+            <span>${escapeHtml(product.category)}</span>
+            <span class="${product.inStock ? 'stock' : 'out'}">
+              ${product.inStock ? 'In stock' : 'Ask for stock'}
+            </span>
+          </div>
+          <h3>${escapeHtml(product.name)}</h3>
+          <p>${escapeHtml(product.description)}</p>
+          <div class="price-row">
+            <span class="price">${formatPrice(product.price)}</span>
+            <a href="tel:+16048080496">Call to hold →</a>
+          </div>
         </div>
-      </div>
-    </article>
-  `).join('');
+      </article>
+    `;
+  }).join('');
 
   addImageFallbacks(grid);
 }
@@ -91,14 +100,14 @@ function changePhoto(event) {
   if (images.length < 2) return;
   const index = (Number(card.dataset.photoIndex) + Number(button.dataset.photoStep) + images.length) % images.length;
   card.dataset.photoIndex = String(index);
-  const frame = card.querySelector('.product-image');
-  frame.innerHTML = `<img src="${escapeHtml(images[index])}" alt="${escapeHtml(product.name)} photo ${index + 1} of ${images.length}" loading="lazy" decoding="async">`;
+  const media = card.querySelector('.product-image-media');
+  media.innerHTML = `<img src="${escapeHtml(images[index])}" alt="${escapeHtml(product.name)} photo ${index + 1} of ${images.length}" loading="lazy" decoding="async">`;
   card.querySelector('.photo-count').textContent = `${index + 1} / ${images.length}`;
-  addImageFallbacks(frame);
+  addImageFallbacks(media);
 }
 
 function addImageFallbacks(grid) {
-  grid.querySelectorAll('.product-image img').forEach(image => {
+  grid.querySelectorAll('img').forEach(image => {
     image.addEventListener('error', () => {
       const placeholder = document.createElement('span');
       placeholder.className = 'product-placeholder';
