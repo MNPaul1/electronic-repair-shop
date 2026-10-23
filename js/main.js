@@ -36,7 +36,6 @@ function initializeRepairCarousel() {
   let activeIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
   let userPaused = motionPreference.matches;
   let playRequested = false;
-  let pointerInside = false;
   let focusInside = false;
   let timer;
 
@@ -76,13 +75,13 @@ function initializeRepairCarousel() {
   function scheduleRotation() {
     clearTimer();
     const explicitlyPlaying = playRequested && !userPaused;
-    if (userPaused || document.hidden || ((pointerInside || focusInside) && !explicitlyPlaying)) return;
+    if (userPaused || document.hidden || (focusInside && !explicitlyPlaying)) return;
 
     timer = window.setTimeout(() => {
       activeIndex = (activeIndex + 1) % slides.length;
       render();
       scheduleRotation();
-    }, 6200);
+    }, 4500);
   }
 
   function showSlide(index, announce = true) {
@@ -104,14 +103,6 @@ function initializeRepairCarousel() {
     scheduleRotation();
   });
 
-  carousel.addEventListener('mouseenter', () => {
-    pointerInside = true;
-    scheduleRotation();
-  });
-  carousel.addEventListener('mouseleave', () => {
-    pointerInside = false;
-    scheduleRotation();
-  });
   carousel.addEventListener('focusin', () => {
     focusInside = true;
     scheduleRotation();
