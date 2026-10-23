@@ -539,6 +539,38 @@ button,input,select,textarea {
   font-size: .9rem;
 }
 
+.team-section {
+  background: var(--warm);
+}
+
+.technician-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 16px;
+}
+
+.technician-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px;
+}
+
+.technician-card h2 {
+  margin: 10px 0 6px;
+  font-size: 1.5rem;
+}
+
+.technician-experience {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.technician-card>a {
+  color: var(--accent);
+  font-weight: 700;
+}
+
 .info-panel {
   background: var(--accent);
   color: #fff;
@@ -794,7 +826,7 @@ footer {
   .hero-photo {
     height: 250px;
   }
-  .service-grid,.product-grid,.check-list,.review-grid {
+  .service-grid,.product-grid,.check-list,.review-grid,.technician-grid {
     grid-template-columns: 1fr;
   }
   .section {
