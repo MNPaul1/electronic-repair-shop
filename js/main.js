@@ -119,12 +119,75 @@ function initializeRepairCarousel() {
   scheduleRotation();
 }
 
+function loadLeaflet() {
+  if (window.L) return Promise.resolve(window.L);
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = () => window.L ? resolve(window.L) : reject(new Error('Map library did not load'));
+    script.onerror = () => reject(new Error('Map library did not load'));
+    document.head.append(script);
+  });
+}
+
+async function initializeStoreMap() {
+  const container = document.querySelector('#store-map');
+  if (!container) return;
+
+  try {
+    const L = await loadLeaflet();
+    container.replaceChildren();
+
+    const map = L.map(container, {
+      scrollWheelZoom: false,
+      zoomControl: true,
+    }).setView([49.15078, -122.89188], 16);
+
+    map.attributionControl.setPrefix(false);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>',
+    }).addTo(map);
+
+    L.circleMarker([49.15078, -122.89188], {
+      radius: 9,
+      color: '#fff',
+      weight: 3,
+      fillColor: '#16724c',
+      fillOpacity: 1,
+    })
+      .addTo(map)
+      .bindTooltip('Delta Electronics', { permanent: true, direction: 'top', offset: [0, -8] });
+  } catch {
+    const fallback = container.querySelector('.map-fallback');
+    if (fallback?.firstChild) fallback.firstChild.textContent = 'Map unavailable. ';
+  }
+}
+
+function initializeBrandMarquee() {
+  const track = document.querySelector('[data-brand-track]');
+  const brandList = track?.querySelector('[data-brand-list]');
+  if (!track || !brandList || track.querySelector('[data-brand-clone]')) return;
+
+  const duplicate = brandList.cloneNode(true);
+  duplicate.removeAttribute('data-brand-list');
+  duplicate.dataset.brandClone = 'true';
+  duplicate.setAttribute('aria-hidden', 'true');
+  duplicate.inert = true;
+  track.append(duplicate);
+}
+
 function initializePage() {
   const year = document.querySelector('#year');
   if (year) year.textContent = new Date().getFullYear();
   initializeNavigation();
+  initializeBrandMarquee();
   initializeRepairCarousel();
   initializeStorefront();
+  initializeStoreMap();
 }
 
 initializePage();
