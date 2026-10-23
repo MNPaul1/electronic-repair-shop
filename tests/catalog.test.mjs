@@ -23,6 +23,7 @@ function mockPage(catalog, { badJson = false } = {}) {
   const images = [];
   const grid = {
     innerHTML: '',
+    addEventListener(_event, listener) { this.onClick = listener; },
     querySelectorAll() {
       return [...this.innerHTML.matchAll(/<img\b/g)].map(() => {
         const image = {
@@ -88,6 +89,10 @@ test('validation enforces required types, unique IDs, and safe image references'
   assert.equal(isValidImageReference('https:example.com/monitor.jpg'), false);
   assert.equal(isValidImageReference('https://name:secret@example.com/monitor.jpg'), false);
   assert.equal(isValidImageReference('/other/monitor.jpg'), false);
+  const image = '/api/images/products/00000000-0000-0000-0000-000000000001.jpg';
+  assert.throws(() => validateCatalog([{ ...product, image: '', images: [image] }]));
+  assert.throws(() => validateCatalog([{ ...product, image, images: [image, image] }]));
+  assert.throws(() => validateCatalog([{ ...product, image, images: Array(11).fill(image) }]));
 });
 
 test('storefront reflects additions, removals, prices, stock, categories, search, and empty catalogues', async () => {
@@ -143,6 +148,24 @@ test('images are lazy loaded and broken images fall back to the placeholder', as
   const placeholderPage = mockPage([samples[0]]);
   await initializeStorefront();
   assert.match(placeholderPage.grid.innerHTML, /product-placeholder/);
+});
+
+test('multiple photos show customer gallery controls', async () => {
+  const first = '/api/images/products/00000000-0000-0000-0000-000000000001.jpg';
+  const second = '/api/images/products/00000000-0000-0000-0000-000000000002.jpg';
+  const page = mockPage([{ ...samples[0], image: first, images: [first, second] }]);
+  await initializeStorefront();
+  assert.match(page.grid.innerHTML, /photo-count">1 \/ 2/);
+  assert.match(page.grid.innerHTML, /Previous photo/);
+  assert.match(page.grid.innerHTML, /Next photo/);
+  const frame = { innerHTML: '', querySelectorAll: () => [] };
+  const count = { textContent: '' };
+  const card = { dataset: { productId: samples[0].id, photoIndex: '0' },
+    querySelector(selector) { return selector === '.product-image' ? frame : count; } };
+  const button = { dataset: { photoStep: '1' }, closest: () => card };
+  page.grid.onClick({ target: { closest: () => button } });
+  assert.match(frame.innerHTML, /00000000-0000-0000-0000-000000000002\.jpg/);
+  assert.equal(count.textContent, '2 / 2');
 });
 
 test('invalid JSON and invalid products show an error that search does not erase', async () => {

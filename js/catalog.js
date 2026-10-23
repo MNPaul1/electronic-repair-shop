@@ -17,6 +17,10 @@ export function isValidImageReference(image) {
   }
 }
 
+export function productImages(product) {
+  return product.images ?? (product.image ? [product.image] : []);
+}
+
 export function validateCatalog(catalog) {
   if (!Array.isArray(catalog)) throw new Error('Catalogue must be a JSON array.');
 
@@ -48,6 +52,14 @@ export function validateCatalog(catalog) {
     }
     if (!isValidImageReference(product.image)) {
       throw new Error(`${label} has an invalid image reference.`);
+    }
+    if (product.images !== undefined) {
+      if (!Array.isArray(product.images) || product.images.length > 10 ||
+        product.images.some(image => !image || !isValidImageReference(image)) ||
+        new Set(product.images).size !== product.images.length ||
+        product.image !== (product.images[0] ?? '')) {
+        throw new Error(`${label} has an invalid photo gallery.`);
+      }
     }
   });
 

@@ -383,6 +383,29 @@ button,input,select,textarea {
   object-fit: cover;
 }
 
+.product-gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  background: #f4f6f7;
+  color: #35404a;
+  font-size: .8rem;
+}
+
+.product-gallery-controls button {
+  min-width: 38px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #35404a;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.product-gallery-controls button:focus-visible { outline: 2px solid var(--accent); }
+
 .product-placeholder {
   font-size: 2rem;
   color: #84909b;

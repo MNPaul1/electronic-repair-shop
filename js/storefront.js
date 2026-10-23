@@ -1,5 +1,5 @@
 import { escapeHtml, formatPrice } from './utils.js';
-import { validateCatalog } from './catalog.js';
+import { productImages, validateCatalog } from './catalog.js';
 
 let activeCategory = null;
 let products = [];
@@ -50,12 +50,17 @@ function renderProductCards() {
     : 'No products match that filter.';
 
   grid.innerHTML = visibleProducts.map(product => `
-    <article class="product-card">
+    <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-photo-index="0">
       <div class="product-image">
         ${product.image
           ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async">`
           : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
       </div>
+      ${productImages(product).length > 1 ? `<div class="product-gallery-controls">
+        <button type="button" data-photo-step="-1" aria-label="Previous photo of ${escapeHtml(product.name)}">‹</button>
+        <span class="photo-count">1 / ${productImages(product).length}</span>
+        <button type="button" data-photo-step="1" aria-label="Next photo of ${escapeHtml(product.name)}">›</button>
+      </div>` : ''}
       <div class="product-body">
         <div class="product-meta">
           <span>${escapeHtml(product.category)}</span>
@@ -74,6 +79,22 @@ function renderProductCards() {
   `).join('');
 
   addImageFallbacks(grid);
+}
+
+function changePhoto(event) {
+  const button = event.target.closest?.('[data-photo-step]');
+  if (!button) return;
+  const card = button.closest('.product-card');
+  const product = products.find(item => item.id === card?.dataset.productId);
+  if (!product) return;
+  const images = productImages(product);
+  if (images.length < 2) return;
+  const index = (Number(card.dataset.photoIndex) + Number(button.dataset.photoStep) + images.length) % images.length;
+  card.dataset.photoIndex = String(index);
+  const frame = card.querySelector('.product-image');
+  frame.innerHTML = `<img src="${escapeHtml(images[index])}" alt="${escapeHtml(product.name)} photo ${index + 1} of ${images.length}" loading="lazy" decoding="async">`;
+  card.querySelector('.photo-count').textContent = `${index + 1} / ${images.length}`;
+  addImageFallbacks(frame);
 }
 
 function addImageFallbacks(grid) {
@@ -108,6 +129,7 @@ export async function initializeStorefront() {
   products = [];
   catalogStatus = 'loading';
   document.querySelector('#productSearch').addEventListener('input', refreshProductCatalog);
+  document.querySelector('#productGrid').addEventListener('click', changePhoto);
   const loading = document.querySelector('#emptyProducts');
   loading.textContent = 'Loading products…';
   loading.hidden = false;
