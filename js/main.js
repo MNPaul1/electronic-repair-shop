@@ -32,9 +32,8 @@ function initializeRepairCarousel() {
   const announcement = carousel.querySelector('[data-repair-announcement]');
   if (slides.length < 2) return;
 
-  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('is-active')));
-  let userPaused = motionPreference.matches;
+  let userPaused = false;
   let playRequested = false;
   let focusInside = false;
   let timer;
@@ -114,14 +113,6 @@ function initializeRepairCarousel() {
     }, 0);
   });
   document.addEventListener('visibilitychange', scheduleRotation);
-  motionPreference.addEventListener?.('change', event => {
-    if (event.matches) {
-      userPaused = true;
-      playRequested = false;
-      syncPlaybackControl();
-    }
-    scheduleRotation();
-  });
 
   render();
   syncPlaybackControl();
