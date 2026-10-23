@@ -92,7 +92,10 @@ test('validation enforces required types, unique IDs, and safe image references'
   const image = '/api/images/products/00000000-0000-0000-0000-000000000001.jpg';
   assert.throws(() => validateCatalog([{ ...product, image: '', images: [image] }]));
   assert.throws(() => validateCatalog([{ ...product, image, images: [image, image] }]));
-  assert.throws(() => validateCatalog([{ ...product, image, images: Array(11).fill(image) }]));
+  const photos = Array.from({ length: 5 }, (_, index) =>
+    `/api/images/products/00000000-0000-0000-0000-${String(index + 1).padStart(12, '0')}.jpg`);
+  assert.equal(validateCatalog([{ ...product, image: photos[0], images: photos.slice(0, 4) }]).length, 1);
+  assert.throws(() => validateCatalog([{ ...product, image: photos[0], images: photos }]));
 });
 
 test('storefront reflects additions, removals, prices, stock, categories, search, and empty catalogues', async () => {

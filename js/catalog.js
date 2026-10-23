@@ -54,7 +54,7 @@ export function validateCatalog(catalog) {
       throw new Error(`${label} has an invalid image reference.`);
     }
     if (product.images !== undefined) {
-      if (!Array.isArray(product.images) || product.images.length > 10 ||
+      if (!Array.isArray(product.images) || product.images.length > 4 ||
         product.images.some(image => !image || !isValidImageReference(image)) ||
         new Set(product.images).size !== product.images.length ||
         product.image !== (product.images[0] ?? '')) {
