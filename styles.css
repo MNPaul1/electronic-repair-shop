@@ -953,6 +953,8 @@ button,input,select,textarea {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
   background: #fff;
   color: var(--text);
   border-radius: 16px;
@@ -1032,6 +1034,9 @@ button,input,select,textarea {
 }
 
 .product-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 18px;
 }
 
@@ -1061,16 +1066,24 @@ button,input,select,textarea {
 }
 
 .product-body p {
+  display: -webkit-box;
+  min-height: 0;
+  overflow: hidden;
   font-size: .85rem;
   color: var(--muted);
-  min-height: 40px;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
 }
 
 .price-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 14px;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 .price {
@@ -1724,12 +1737,14 @@ footer {
     line-height: 1.4;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
   .price-row {
     align-items: flex-start;
     flex-direction: column;
     gap: 3px;
-    margin-top: 10px;
+    margin-top: auto;
+    padding-top: 10px;
   }
   .price {
     font-size: 1rem;
