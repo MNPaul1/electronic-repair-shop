@@ -4,6 +4,112 @@ import { productImages, validateCatalog } from './catalog.js';
 let activeCategory = null;
 let products = [];
 let catalogStatus = 'loading';
+let productDialog;
+let activeDialogProduct = null;
+let activeDialogPhotoIndex = 0;
+let lastDialogTrigger = null;
+
+function initializeProductDialog() {
+  productDialog = document.createElement('dialog');
+  productDialog.className = 'product-dialog';
+  productDialog.id = 'productDetailsDialog';
+  productDialog.setAttribute('aria-labelledby', 'productDialogTitle');
+  productDialog.setAttribute('aria-describedby', 'productDialogDescription');
+  productDialog.innerHTML = `
+    <div class="product-dialog-panel">
+      <button class="product-dialog-close" type="button" data-dialog-close aria-label="Close product details">×</button>
+      <div class="product-dialog-layout">
+        <div class="product-dialog-gallery" data-dialog-gallery></div>
+        <div class="product-dialog-info">
+          <div class="product-meta">
+            <span data-dialog-category></span>
+            <span data-dialog-stock></span>
+          </div>
+          <h2 id="productDialogTitle" data-dialog-title></h2>
+          <p class="product-dialog-description" id="productDialogDescription" data-dialog-description></p>
+          <div class="product-dialog-price" data-dialog-price></div>
+          <a class="btn product-dialog-call" href="tel:+16048080496">Call to ask about this product</a>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.append(productDialog);
+
+  productDialog.querySelector('[data-dialog-close]').addEventListener('click', () => productDialog.close());
+  productDialog.addEventListener('click', event => {
+    if (event.target === productDialog) productDialog.close();
+    changeDialogPhoto(event);
+  });
+  productDialog.addEventListener('close', () => {
+    document.body.classList.remove('product-dialog-open');
+    if (lastDialogTrigger?.isConnected) lastDialogTrigger.focus();
+    lastDialogTrigger = null;
+    activeDialogProduct = null;
+  });
+}
+
+function renderDialogPhoto() {
+  if (!productDialog || !activeDialogProduct) return;
+
+  const gallery = productDialog.querySelector('[data-dialog-gallery]');
+  const images = productImages(activeDialogProduct);
+  const image = images[activeDialogPhotoIndex];
+  gallery.innerHTML = `
+    <div class="product-dialog-photo">
+      ${image
+        ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(activeDialogProduct.name)} photo ${activeDialogPhotoIndex + 1} of ${images.length}" decoding="async">`
+        : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
+      ${images.length > 1 ? `
+        <div class="product-dialog-gallery-controls" role="group" aria-label="Product photos">
+          <button type="button" data-dialog-photo-step="-1" aria-label="Previous photo">‹</button>
+          <span aria-live="polite" aria-atomic="true">${activeDialogPhotoIndex + 1} / ${images.length}</span>
+          <button type="button" data-dialog-photo-step="1" aria-label="Next photo">›</button>
+        </div>` : ''}
+    </div>
+  `;
+  addImageFallbacks(gallery);
+}
+
+function openProductDialog(product, trigger) {
+  if (!productDialog || !product || productDialog.open) return;
+
+  activeDialogProduct = product;
+  activeDialogPhotoIndex = 0;
+  lastDialogTrigger = trigger;
+  productDialog.querySelector('[data-dialog-category]').textContent = product.category;
+
+  const stock = productDialog.querySelector('[data-dialog-stock]');
+  stock.className = product.inStock ? 'stock' : 'out';
+  stock.textContent = product.inStock ? 'In stock' : 'Ask for stock';
+
+  productDialog.querySelector('[data-dialog-title]').textContent = product.name;
+  productDialog.querySelector('[data-dialog-description]').textContent = product.description || 'No description available.';
+  productDialog.querySelector('[data-dialog-price]').textContent = formatPrice(product.price);
+  renderDialogPhoto();
+
+  document.body.classList.add('product-dialog-open');
+  productDialog.showModal();
+  productDialog.querySelector('[data-dialog-close]').focus({ preventScroll: true });
+}
+
+function openProductFromCard(event) {
+  const card = event.target.closest?.('.product-card');
+  if (!card || event.target.closest?.('[data-photo-step], a')) return;
+
+  const trigger = event.target.closest?.('[data-open-product]') ?? card.querySelector('[data-open-product]');
+  const product = products.find(item => item.id === card?.dataset.productId);
+  if (product) openProductDialog(product, trigger);
+}
+
+function changeDialogPhoto(event) {
+  const button = event.target.closest?.('[data-dialog-photo-step]');
+  if (!button || !activeDialogProduct) return;
+
+  const images = productImages(activeDialogProduct);
+  if (images.length < 2) return;
+  activeDialogPhotoIndex = (activeDialogPhotoIndex + Number(button.dataset.dialogPhotoStep) + images.length) % images.length;
+  renderDialogPhoto();
+}
 
 function renderFilters() {
   const filterContainer = document.querySelector('#productFilters');
@@ -58,11 +164,13 @@ function renderProductCards() {
     return `
       <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-photo-index="0">
         <div class="product-image">
-          <div class="product-image-media">
-            ${product.image
-              ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async">`
-              : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
-          </div>
+          <button class="product-image-trigger" type="button" data-open-product aria-haspopup="dialog" aria-controls="productDetailsDialog" aria-label="View details for ${escapeHtml(product.name)}">
+            <div class="product-image-media">
+              ${product.image
+                ? `<img src="${escapeHtml(product.image)}" alt="" loading="lazy" decoding="async">`
+                : '<span class="product-placeholder" aria-hidden="true">⌁</span>'}
+            </div>
+          </button>
           ${images.length > 1 ? `<div class="product-gallery-controls" role="group" aria-label="Photo gallery for ${escapeHtml(product.name)}">
             <button type="button" data-photo-step="-1" aria-label="Previous photo of ${escapeHtml(product.name)}">‹</button>
             <span class="photo-count" aria-live="polite" aria-atomic="true">1 / ${images.length}</span>
@@ -76,8 +184,9 @@ function renderProductCards() {
               ${product.inStock ? 'In stock' : 'Ask for stock'}
             </span>
           </div>
-          <h3>${escapeHtml(product.name)}</h3>
+          <h3><button class="product-title-trigger" type="button" data-open-product aria-haspopup="dialog" aria-controls="productDetailsDialog">${escapeHtml(product.name)}</button></h3>
           <p>${escapeHtml(product.description)}</p>
+          <button class="product-details-link" type="button" data-open-product aria-haspopup="dialog" aria-controls="productDetailsDialog">View full details <span aria-hidden="true">↗</span></button>
           <div class="price-row">
             <span class="price">${formatPrice(product.price)}</span>
             <a href="tel:+16048080496">Call to hold →</a>
@@ -137,8 +246,10 @@ export async function initializeStorefront() {
   activeCategory = null;
   products = [];
   catalogStatus = 'loading';
+  initializeProductDialog();
   document.querySelector('#productSearch').addEventListener('input', refreshProductCatalog);
   document.querySelector('#productGrid').addEventListener('click', changePhoto);
+  document.querySelector('#productGrid').addEventListener('click', openProductFromCard);
   const loading = document.querySelector('#emptyProducts');
   loading.textContent = 'Loading products…';
   loading.hidden = false;

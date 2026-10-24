@@ -18,6 +18,56 @@ function initializeNavigation() {
   });
 }
 
+function initializeScrollReveals() {
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+
+  const selector = [
+    '.hero-copy',
+    '[data-repair-carousel]',
+    '.section-head',
+    '.service-card',
+    '.repair-brand-strip',
+    '.product-card',
+    '.technician-card',
+    '.review-card',
+    '.contact-grid > div:first-child',
+    '.contact-cards > *',
+    '#store-map',
+  ].join(',');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -28px 0px' });
+
+  function prepare(element) {
+    if (element.matches(selector) && !element.classList.contains('reveal-ready')) {
+      const siblings = [...(element.parentElement?.children ?? [])];
+      const index = siblings.indexOf(element);
+      element.style.setProperty('--reveal-delay', `${Math.max(0, index % 4) * 55}ms`);
+      element.classList.add('reveal-ready');
+      observer.observe(element);
+    }
+    element.querySelectorAll?.(selector).forEach(prepare);
+  }
+
+  prepare(document.documentElement);
+
+  const productGrid = document.querySelector('#productGrid');
+  if (productGrid) {
+    const productObserver = new MutationObserver(records => {
+      records.forEach(record => record.addedNodes.forEach(node => {
+        if (node.nodeType === Node.ELEMENT_NODE) prepare(node);
+      }));
+    });
+    productObserver.observe(productGrid, { childList: true });
+  }
+}
+
 function initializeRepairCarousel() {
   const carousel = document.querySelector('[data-repair-carousel]');
   if (!carousel) return;
@@ -184,6 +234,7 @@ function initializePage() {
   const year = document.querySelector('#year');
   if (year) year.textContent = new Date().getFullYear();
   initializeNavigation();
+  initializeScrollReveals();
   initializeBrandMarquee();
   initializeRepairCarousel();
   initializeStorefront();

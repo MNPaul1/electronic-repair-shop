@@ -1,13 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <style>
+    .orbit {
+      stroke-dasharray: 106 20;
+      animation: orbit-flow 4.8s linear infinite;
+    }
+
+    .screen-tiles {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: screen-shimmer 3.2s ease-in-out infinite;
+    }
+
+    @keyframes orbit-flow {
+      to { stroke-dashoffset: -126; }
+    }
+
+    @keyframes screen-shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .7; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orbit, .screen-tiles { animation: none; }
+    }
+  </style>
   <defs>
     <linearGradient id="screen" x1="18" y1="10" x2="48" y2="40" gradientUnits="userSpaceOnUse">
       <stop stop-color="#39A96B" />
       <stop offset="1" stop-color="#16724C" />
     </linearGradient>
   </defs>
-  <ellipse cx="32" cy="32" rx="28" ry="9.5" transform="rotate(-31 32 32)" stroke="#16724C" stroke-width="3.5" />
+  <ellipse class="orbit" cx="32" cy="32" rx="28" ry="9.5" transform="rotate(-31 32 32)" stroke="#16724C" stroke-width="3.5" />
   <path d="m18 12 31-5v29l-31 5V12Z" fill="url(#screen)" stroke="#0F5137" stroke-width="2.5" stroke-linejoin="round" />
-  <path d="m22 16 7-1v7l-7 1v-7Zm9-2 7-1v7l-7 1v-7Zm9-1 5-1v7l-5 1v-7ZM22 25l7-1v7l-7 1v-7Zm9-2 7-1v7l-7 1v-7Zm9-1 5-1v7l-5 1v-7ZM22 34l7-1v4l-7 1v-4Zm9-2 7-1v4l-7 1v-4Zm9-1 5-1v4l-5 1v-4Z" fill="#E2F4E8" />
+  <path class="screen-tiles" d="m22 16 7-1v7l-7 1v-7Zm9-2 7-1v7l-7 1v-7Zm9-1 5-1v7l-5 1v-7ZM22 25l7-1v7l-7 1v-7Zm9-2 7-1v7l-7 1v-7Zm9-1 5-1v7l-5 1v-7ZM22 34l7-1v4l-7 1v-4Zm9-2 7-1v4l-7 1v-4Zm9-1 5-1v4l-5 1v-4Z" fill="#E2F4E8" />
   <path d="m15 41 35-6-8 8-34 6 7-8Z" fill="#0F6845" stroke="#0F5137" stroke-width="2" stroke-linejoin="round" />
   <path d="m18 40 31-5" stroke="#6AC68D" stroke-width="2" stroke-linecap="round" />
 </svg>
